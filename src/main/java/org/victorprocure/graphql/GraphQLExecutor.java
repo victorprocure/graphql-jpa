@@ -64,8 +64,6 @@ public class GraphQLExecutor {
     public ExecutionResult execute(String query, Map<String, Object> arguments, Object context) {
         if(arguments == null && context == null) {
             return graphQL.execute(query);
-        } else if(arguments == null && context != null) {
-            return graphQL.execute(query, context);
         }
 
         return graphQL.execute(query, context, arguments);

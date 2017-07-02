@@ -85,7 +85,7 @@ public class Mutation {
         Object newInstance = clazz.newInstance();
         log.debug("INSTANCE: " + newInstance);
 
-        String primaryKeyName = ((Attribute)et.getIdType()).getName();//this.getPrimaryKey(newInstance, 0);
+        String primaryKeyName = et.getId(clazz).getName();//this.getPrimaryKey(newInstance, 0);
         Object primaryKey = env.getArgument(primaryKeyName);
 
         log.debug("Instance: " + newInstance.getClass().getName() + ", Primary Key Name: " + primaryKeyName + " Value: " + primaryKey.toString());

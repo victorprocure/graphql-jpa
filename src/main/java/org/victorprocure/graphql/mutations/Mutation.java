@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.SingularAttribute;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -85,7 +86,8 @@ public class Mutation {
         Object newInstance = clazz.newInstance();
         log.debug("INSTANCE: " + newInstance);
 
-        String primaryKeyName = ((Attribute)et.getIdClassAttributes().stream().findFirst().get()).getName();//this.getPrimaryKey(newInstance, 0);
+        SingularAttribute<?, ?> pkattr = et.getId(et.getIdType().getJavaType());
+        String primaryKeyName = pkattr.getName();//this.getPrimaryKey(newInstance, 0);
         Object primaryKey = env.getArgument(primaryKeyName);
 
         log.debug("Instance: " + newInstance.getClass().getName() + ", Primary Key Name: " + primaryKeyName + " Value: " + primaryKey.toString());

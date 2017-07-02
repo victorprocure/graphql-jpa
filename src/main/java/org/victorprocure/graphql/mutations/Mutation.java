@@ -10,6 +10,7 @@ import org.victorprocure.graphql.utils.SchemaUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -79,9 +80,12 @@ public class Mutation {
         log.debug("Entity Type: " + et.getName());
 
         Class<?> clazz = et.getJavaType();
+        log.debug("CLASS: " + clazz);
 
         Object newInstance = clazz.newInstance();
-        String primaryKeyName = et.getIdType().getJavaType().getName();//this.getPrimaryKey(newInstance, 0);
+        log.debug("INSTANCE: " + newInstance);
+
+        String primaryKeyName = ((Attribute)et.getIdType()).getName();//this.getPrimaryKey(newInstance, 0);
         Object primaryKey = env.getArgument(primaryKeyName);
 
         log.debug("Instance: " + newInstance.getClass().getName() + ", Primary Key Name: " + primaryKeyName + " Value: " + primaryKey.toString());

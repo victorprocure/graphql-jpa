@@ -83,4 +83,8 @@ public class GraphQLExecutor {
         return graphQL.execute(query, context, arguments);
     }
 
+    public void setDependencyResolver(IDependencyResolver dependencyResolver) {
+        this.dependencyResolver = dependencyResolver;
+    }
+
 }

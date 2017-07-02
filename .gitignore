@@ -8,4 +8,4 @@ build/
 .settings/
 classes/
 target/**
-!target/graphql-jpa-mutate*.jar
+!target/mvn-repo**

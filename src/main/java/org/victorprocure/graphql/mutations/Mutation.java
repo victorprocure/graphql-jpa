@@ -87,10 +87,15 @@ public class Mutation {
         log.debug("INSTANCE: " + newInstance);
 
         SingularAttribute<?, ?> pkattr = et.getId(et.getIdType().getJavaType());
-        String primaryKeyName = pkattr.getName();//this.getPrimaryKey(newInstance, 0);
+        String primaryKeyName = pkattr.getName();
         Object primaryKey = env.getArgument(primaryKeyName);
 
-        log.debug("Instance: " + newInstance.getClass().getName() + ", Primary Key Name: " + primaryKeyName + " Value: " + primaryKey.toString());
+        log.debug(
+                new StringBuilder()
+                        .append("Instance: ").append(newInstance.getClass().getName())
+                        .append(", Primary Key Name: ").append(primaryKeyName)
+                        .append(" Value: ").append(primaryKey).toString()
+        );
 
         boolean isNew = primaryKey == null;
 

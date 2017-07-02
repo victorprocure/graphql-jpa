@@ -74,16 +74,18 @@ public class Mutation {
 
     private Object updateEntity(DataFetchingEnvironment env)
             throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String name = "com.mindfuel.wonderville.domain.";
         EntityType et = entityManager.getMetamodel().getEntities().stream().filter(it->it.getName().equals(env.getFieldType().getName())).findFirst().get();
 
         log.debug("Entity Type: " + et.getName());
 
-        Class<?> clazz = Class.forName(name + env.getFieldType().getName());
+        Class<?> clazz = et.getJavaType();
 
         Object newInstance = clazz.newInstance();
-        String primaryKeyName = this.getPrimaryKey(newInstance, 0);
+        String primaryKeyName = et.getIdType().getJavaType().getName();//this.getPrimaryKey(newInstance, 0);
         Object primaryKey = env.getArgument(primaryKeyName);
+
+        log.debug("Instance: " + newInstance.getClass().getName() + ", Primary Key Name: " + primaryKeyName + " Value: " + primaryKey.toString());
+
         boolean isNew = primaryKey == null;
 
         if(!isNew) {

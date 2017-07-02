@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -64,6 +65,10 @@ public class GraphQLExecutor {
     public ExecutionResult execute(String query, Map<String, Object> arguments, Object context) {
         if(arguments == null && context == null) {
             return graphQL.execute(query);
+        }
+
+        if(arguments == null) {
+            arguments = Collections.<String, Object>emptyMap();
         }
 
         return graphQL.execute(query, context, arguments);

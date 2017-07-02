@@ -14,9 +14,11 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.function.Function;
 
 public class JavaScalars {
     static final Logger log = LoggerFactory.getLogger(JavaScalars.class);
@@ -188,4 +190,31 @@ public class JavaScalars {
             }
         }
     });
+
+    public static final GraphQLScalarType GraphQLInstant = temporalScalar(Instant.class, Instant::parse, Function.identity());
+
+    public static <T> GraphQLScalarType temporalScalar(Class<T> type, Function<String, T> fromString, Function<Instant, T> fromDate) {
+        return new GraphQLScalarType(type.getSimpleName(), "Built-In " + type.getSimpleName(), new Coercing(){
+            @Override
+            public String serialize(Object input) {
+                return input instanceof TemporalAccessor ? input.toString() : ((Date) input).toInstant().toString();
+            }
+
+            @Override
+            public Object parseValue(Object input) {
+                return serialize(input);
+            }
+
+            @Override
+            public T parseLiteral(Object input) {
+                if (input instanceof StringValue) {
+                    return fromString.apply(((StringValue) input).getValue());
+                } else if (input instanceof IntValue) {
+                    return fromDate.apply(Instant.ofEpochMilli(((IntValue) input).getValue().longValue()));
+                } else {
+                    return null;
+                }
+            }
+        });
+    }
 }

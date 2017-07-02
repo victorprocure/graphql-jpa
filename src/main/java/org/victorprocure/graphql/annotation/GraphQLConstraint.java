@@ -1,5 +1,6 @@
 package org.victorprocure.graphql.annotation;
 
+import org.victorprocure.graphql.IValueConstraint;
 import org.victorprocure.graphql.OperationType;
 
 import java.lang.annotation.ElementType;
@@ -14,7 +15,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.TYPE})
 public @interface GraphQLConstraint {
   OperationType operationType();
-  String matches();
-  int equals();
+  Class<?extends IValueConstraint> constrainer();
 }
 

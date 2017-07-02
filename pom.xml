@@ -6,7 +6,34 @@
 
     <groupId>com.victorprocure</groupId>
     <artifactId>graphql-jpa-mutate</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Extensions for GraphQL-Java to allow it to be used with JPA. Extends on previous work to allow mutations</description>
+    <url>https://github.com/victorprocure/graphql-jpa</url>
+
+    <scm>
+        <url>https://github.com/victorprocure/graphql-jpa</url>
+        <connection>scm:git:git://github.com/victorprocure/graphql-jpa.git</connection>
+        <developerConnection>scm:git:ssh://github.com/victorprocure/graphql-jpa.git</developerConnection>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Victor Procure</name>
+            <email>victor@victorprocure.co</email>
+            <organization>Victor Procure</organization>
+            <organizationUrl>http://www.victorprocure.co</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

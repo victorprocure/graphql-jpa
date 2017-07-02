@@ -7,4 +7,5 @@ build/
 .project
 .settings/
 classes/
+!graphql-jpa-mutate*.jar
 target/

@@ -19,6 +19,7 @@ public class GraphQLExecutor {
     private GraphQL graphQL;
 
     private BiConsumer<GraphQLSchema.Builder, EntityManager> mutationSchema;
+    private IDependencyResolver dependencyResolver;
 
     protected GraphQLExecutor() {}
 
@@ -30,6 +31,14 @@ public class GraphQLExecutor {
     public GraphQLExecutor(EntityManager entityManager, BiConsumer<GraphQLSchema.Builder, EntityManager> mutationSchema) {
         this.entityManager = entityManager;
         this.mutationSchema = mutationSchema;
+
+        createGraphQL();
+    }
+
+    public GraphQLExecutor(EntityManager entityManager, BiConsumer<GraphQLSchema.Builder, EntityManager> mutationSchema, IDependencyResolver dependencyResolver) {
+        this.entityManager = entityManager;
+        this.mutationSchema = mutationSchema;
+        this.dependencyResolver = dependencyResolver;
 
         createGraphQL();
     }

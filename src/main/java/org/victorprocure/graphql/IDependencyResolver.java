@@ -1,7 +1,7 @@
 package org.victorprocure.graphql; 
 
 public interface IDependencyResolver {
-    Class<?> resolve(String dependencyName);
+    Object resolve(String dependencyName);
 
-    Class<?> resolve(Object dependencyObject);
+    Object resolve(Object dependencyObject);
 }

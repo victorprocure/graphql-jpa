@@ -10,10 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.victorprocure.graphql.configuration.IGraphQLJpaConfiguration;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -52,7 +56,11 @@ public class JpaResolverBuilder extends FilteredResolverBuilder {
                         .append(" filters: ")
                         .append(filters)
                         .toString());
-    return null;
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object> query = cb.createQuery((Class) beanType.getType());
+        Root root = query.from(beanType.getClass());
+
+    return Collections.emptyList();
     }
 
     private Collection<Resolver> buildMutationResolvers(Object querySourceBean, AnnotatedType beanType, List<Predicate<Member>> filters) {
@@ -65,6 +73,6 @@ public class JpaResolverBuilder extends FilteredResolverBuilder {
                         .append(" filters: ")
                         .append(filters)
                         .toString());
-    return null;
+    return Collections.emptyList();
     }
 }

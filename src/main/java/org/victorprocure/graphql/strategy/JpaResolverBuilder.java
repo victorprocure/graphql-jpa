@@ -5,6 +5,7 @@ import io.leangen.graphql.metadata.strategy.query.AnnotatedArgumentBuilder;
 import io.leangen.graphql.metadata.strategy.query.BeanOperationNameGenerator;
 import io.leangen.graphql.metadata.strategy.query.FilteredResolverBuilder;
 import io.leangen.graphql.metadata.strategy.query.PublicResolverBuilder;
+import io.leangen.graphql.util.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.victorprocure.graphql.configuration.IGraphQLJpaConfiguration;
@@ -16,6 +17,7 @@ import javax.persistence.criteria.Root;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -56,8 +58,9 @@ public class JpaResolverBuilder extends FilteredResolverBuilder {
                         .append(" filters: ")
                         .append(filters)
                         .toString());
+        Class<?> rawType = ClassUtils.getRawType((Type) beanType);
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Object> query = cb.createQuery((Class) beanType.getClass());
+        CriteriaQuery<Object> query = cb.createQuery((Class) beanType.getType());
         Root root = query.from(beanType.getClass());
 
     return Collections.emptyList();

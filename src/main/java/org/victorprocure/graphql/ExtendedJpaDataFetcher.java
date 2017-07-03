@@ -5,6 +5,7 @@ import graphql.language.Field;
 import graphql.language.IntValue;
 import graphql.language.ObjectValue;
 import graphql.schema.DataFetchingEnvironment;
+import org.victorprocure.graphql.schema.GraphQLSchemaBuilder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

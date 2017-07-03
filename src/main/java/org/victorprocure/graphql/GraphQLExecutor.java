@@ -3,6 +3,8 @@ package org.victorprocure.graphql;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
+import org.victorprocure.graphql.configuration.IGraphQLJpaConfiguration;
+import org.victorprocure.graphql.schema.GraphQLSchemaBuilder;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -13,51 +15,24 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class GraphQLExecutor {
-
-    @Resource
-    private EntityManager entityManager;
     private GraphQL graphQL;
 
-    private BiConsumer<GraphQLSchema.Builder, EntityManager> mutationSchema;
-    private IDependencyResolver dependencyResolver;
+    private IGraphQLJpaConfiguration configuration;
 
     protected GraphQLExecutor() {}
 
-    public GraphQLExecutor(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        createGraphQL();
+    public GraphQLExecutor(IGraphQLJpaConfiguration configuration) {
+     this.configuration = configuration;
+
+     this.createGraphQL();
     }
 
-    public GraphQLExecutor(EntityManager entityManager, BiConsumer<GraphQLSchema.Builder, EntityManager> mutationSchema) {
-        this.entityManager = entityManager;
-        this.mutationSchema = mutationSchema;
-
-        createGraphQL();
-    }
-
-    public GraphQLExecutor(EntityManager entityManager, BiConsumer<GraphQLSchema.Builder, EntityManager> mutationSchema, IDependencyResolver dependencyResolver) {
-        this.entityManager = entityManager;
-        this.mutationSchema = mutationSchema;
-        this.dependencyResolver = dependencyResolver;
-
-        createGraphQL();
-    }
 
     @PostConstruct
     protected void createGraphQL() {
-        if (entityManager != null) {
-            GraphQLSchemaBuilder schemaBuilder;
-
-            if(this.mutationSchema != null) {
-                schemaBuilder = new GraphQLSchemaBuilder(entityManager, this.mutationSchema);
-            }else{
-                schemaBuilder = new GraphQLSchemaBuilder(entityManager);
-            }
-
-            this.graphQL = GraphQL
-                    .newGraphQL(schemaBuilder.getGraphQLSchema())
-                    .build();
-        }
+        this.graphQL = GraphQL
+                .newGraphQL(this.configuration.getSchemaBuilder().buildSchema())
+                .build();
     }
 
     @Transactional
@@ -82,9 +57,4 @@ public class GraphQLExecutor {
 
         return graphQL.execute(query, context, arguments);
     }
-
-    public void setDependencyResolver(IDependencyResolver dependencyResolver) {
-        this.dependencyResolver = dependencyResolver;
-    }
-
 }

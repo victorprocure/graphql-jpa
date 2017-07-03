@@ -1,29 +1,21 @@
-package org.victorprocure.graphql;
+package org.victorprocure.graphql.schema;
 
 import graphql.Scalars;
 import graphql.schema.*;
-import org.victorprocure.graphql.annotation.SchemaDocumentation;
-import org.victorprocure.graphql.annotation.GraphQLIgnore;
+import org.victorprocure.graphql.ExtendedJpaDataFetcher;
+import org.victorprocure.graphql.JpaDataFetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.victorprocure.graphql.utils.SchemaUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.*;
-import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.Field;
-import java.lang.reflect.Member;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.victorprocure.graphql.utils.SchemaUtils.getSchemaDocumentation;
 
-public class GraphQLSchemaBuilder {
+public class GraphQLSchemaBuilder implements ISchemaBuilder {
 
     public static final String PAGINATION_REQUEST_PARAM_NAME = "paginationRequest";
     private static final Logger log = LoggerFactory.getLogger(GraphQLSchemaBuilder.class);
@@ -40,7 +32,7 @@ public class GraphQLSchemaBuilder {
         this.mutationSchema = mutationSchema;
     }
 
-    public GraphQLSchema getGraphQLSchema() {
+    public GraphQLSchema buildSchema() {
         GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
         schemaBuilder.query(getQueryType());
 

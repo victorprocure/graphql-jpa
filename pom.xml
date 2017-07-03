@@ -6,7 +6,7 @@
 
     <groupId>com.victorprocure</groupId>
     <artifactId>graphql-jpa-mutate</artifactId>
-    <version>1.0.10</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -59,6 +59,10 @@
             <name>bintray</name>
             <url>http://dl.bintray.com/andimarek/graphql-java</url>
         </repository>
+        <repository>
+            <id>leangen</id>
+            <url>http://dl.bintray.com/leangen/maven</url>
+        </repository>
     </repositories>
     <dependencies>
     <!-- Expose JPA entities using GraphQL -->
@@ -67,6 +71,11 @@
         <artifactId>graphql-java</artifactId>
         <version>2.4.0</version>
     </dependency>
+        <dependency>
+            <groupId>io.leangen.graphql</groupId>
+            <artifactId>spqr</artifactId>
+            <version>0.8.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/javax.transaction/javax.transaction-api -->
         <dependency>
             <groupId>javax.transaction</groupId>

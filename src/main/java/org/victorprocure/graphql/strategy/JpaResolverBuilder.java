@@ -32,21 +32,39 @@ public class JpaResolverBuilder extends FilteredResolverBuilder {
 
     @Override
     public Collection<Resolver> buildQueryResolvers(Object querySourceBean, AnnotatedType beanType) {
-        log.debug(new StringBuilder().append("querySource: ").append(querySourceBean).append(" annotated: ").append(beanType).toString());
+
         return this.buildQueryResolvers(querySourceBean, beanType, this.getFilters());
     }
 
     @Override
     public Collection<Resolver> buildMutationResolvers(Object querySourceBean, AnnotatedType beanType) {
-        log.debug(new StringBuilder().append("querySource: ").append(querySourceBean).append(" annotated: ").append(beanType).toString());
+
         return this.buildMutationResolvers(querySourceBean, beanType, this.getFilters());
     }
 
     private Collection<Resolver> buildQueryResolvers(Object querySourceBean, AnnotatedType beanType, List<Predicate<Member>> filters) {
+        log.debug(
+                new StringBuilder()
+                .append("querySource: ")
+                        .append(querySourceBean)
+                        .append(" annotated: ")
+                        .append(beanType)
+                        .append(" filters: ")
+                        .append(filters)
+                        .toString());
     return null;
     }
 
     private Collection<Resolver> buildMutationResolvers(Object querySourceBean, AnnotatedType beanType, List<Predicate<Member>> filters) {
+        log.debug(
+                new StringBuilder()
+                        .append("querySource: ")
+                        .append(querySourceBean)
+                        .append(" annotated: ")
+                        .append(beanType)
+                        .append(" filters: ")
+                        .append(filters)
+                        .toString());
     return null;
     }
 }

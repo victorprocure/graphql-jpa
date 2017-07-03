@@ -22,7 +22,7 @@ public class GraphQLJpaSchemaBuilder implements ISchemaBuilder {
         GraphQLSchemaGenerator generator = new GraphQLSchemaGenerator();
         this.entityManager.getMetamodel().getEntities().stream()
                 .forEach(e->generator.withOperationsFromType(e.getJavaType()));
-        generator.withResolverBuilders(new JpaResolverBuilder());
+        generator.withResolverBuilders(new JpaResolverBuilder(this.entityManager));
         GraphQLSchema schema = generator.generate();
 
         return schema;

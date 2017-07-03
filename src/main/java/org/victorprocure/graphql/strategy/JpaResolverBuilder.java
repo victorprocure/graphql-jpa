@@ -60,7 +60,7 @@ public class JpaResolverBuilder extends FilteredResolverBuilder {
                         .toString());
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         Class<?> clazz = beanType.getClass();
-        
+    Type t = beanType.getType();
         CriteriaQuery<Object> query = cb.createQuery((Class) beanType.getType());
         Root root = query.from(beanType.getClass());
 
